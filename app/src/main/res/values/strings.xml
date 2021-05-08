@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">My Applications</string>
+    <string name="button">Button</string>
+    <string name="this_is_demo_text">This is Demo Text</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
