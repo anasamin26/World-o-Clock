@@ -34,17 +34,16 @@ public class WorldClock extends AppCompatActivity {
     myadapter recyclerAdapter;
     List<string> arrs = new ArrayList<>();
     LayoutInflater layoutInflater;
-    List<string> results = new ArrayList<>();
-    private FloatingActionButton button;
+    List<string> results=new ArrayList<>();
     CheckBox importanceCheck;
+    private FloatingActionButton button;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setTitle("World Clock");
-        rcv = (RecyclerView) findViewById(R.id.rclvie);
-        rcv.setLayoutManager(new LinearLayoutManager(this));
-
+        rcv=(RecyclerView)findViewById(R.id.rclview);
+        rcv.setLayoutManager(new LinearLayoutManager((this)));
 
         String[] arr = TimeZone.getAvailableIDs();
         string abc = new string();
