@@ -19,13 +19,18 @@ public class MyDbHandler extends SQLiteOpenHelper {
 
     public MyDbHandler(Context context)
     {
-        super(context, Params.DB_NAME,null,Params.DB_VERSION);
+        super(context, Params.DB_NAME,null,4);
     }
+
     public static final  String a="favs";
     @Override
     public void onCreate(SQLiteDatabase db) {
         String create="CREATE TABLE "+Params.TABLE_NAME+"("+Params.KEY_ID+"INTEGER PRIMARY KEY,"+Params.KEY_NAME+" TEXT,"+Params.KEY_TIME+" TEXT"+")";
+        String creat="CREATE TABLE "+Params.TABLE_NAME1+"("+Params.KEY_ID+"INTEGER PRIMARY KEY,"+Params.KEY_NAME+" TEXT,"+Params.KEY_TIME+" TEXT"+")";
+
+
         db.execSQL(create);
+        db.execSQL(creat);
     }
 
     @Override
@@ -50,6 +55,25 @@ public class MyDbHandler extends SQLiteOpenHelper {
 
         db.close();
     }
+    public void saveallclock(string s)
+    {
+
+        SQLiteDatabase db=this.getWritableDatabase();
+        ContentValues values=new ContentValues();
+        values.put(Params.KEY_NAME,s.city);
+        values.put(Params.KEY_TIME,s.time);
+        try{
+            db.insert(Params.TABLE_NAME1,null,values);
+            Log.d("abcD","Successfully inserted");
+        }
+        catch (Exception E)
+        {
+            Log.d("abcE",E.getMessage());
+        }
+
+        db.close();
+    }
+
 
     public List<string> getAllClocks(){
         List<string> clocklist=new ArrayList<>();
@@ -71,6 +95,27 @@ public class MyDbHandler extends SQLiteOpenHelper {
 
         return clocklist;
     }
+    public List<string> GetAllClocks(){
+        List<string> clocklist=new ArrayList<>();
+        SQLiteDatabase dbs=this.getReadableDatabase();
+        String select="SELECT * FROM "+Params.TABLE_NAME1;
+        Cursor cursor= dbs.rawQuery(select, null);
+        while(cursor.moveToNext())
+        {
+            string s=new string() ;
+            s.city = cursor.getString(1);
+            s.time = cursor.getString(2);
+            clocklist.add(s);
+            Log.d("defg","Successfully retrieved");
+
+        }
+        cursor.close();
+
+
+
+        return clocklist;
+    }
+
     public void deleteclock(string s)
     {
         SQLiteDatabase db =this.getWritableDatabase();
@@ -84,6 +129,18 @@ public class MyDbHandler extends SQLiteOpenHelper {
         db.close();
 
     }
+    public void deleteclock(String s)
+    {
+        SQLiteDatabase db =this.getWritableDatabase();
+        try {
+            db.delete(Params.TABLE_NAME, Params.KEY_NAME + "=?", new String[]{s});
+            Log.d("efg","Deleted");
+        }
+        catch(Exception E) {
+            Log.d("efg", E.getMessage());
+        }
+        db.close();
 
+    }
 
 }

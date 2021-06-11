@@ -1,14 +1,18 @@
 package com.example.myapplications;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +21,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapplications.data.MyDbHandler;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.Serializable;
@@ -36,6 +41,7 @@ public class WorldClock extends AppCompatActivity {
     LayoutInflater layoutInflater;
     List<string> results=new ArrayList<>();
     CheckBox importanceCheck;
+
     private FloatingActionButton button;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +51,12 @@ public class WorldClock extends AppCompatActivity {
         rcv=(RecyclerView)findViewById(R.id.rclview);
         rcv.setLayoutManager(new LinearLayoutManager((this)));
 
+
+
+
+        MyDbHandler db=new MyDbHandler(this);
+        arrs=db.GetAllClocks();
+/*
         String[] arr = TimeZone.getAvailableIDs();
         string abc = new string();
         for (int i = 0; i < arr.length; i++) {
@@ -56,9 +68,18 @@ public class WorldClock extends AppCompatActivity {
             abc.time = date_format.format(date);
             arrs.add(i, abc);
 
-        }
+
+        }*/
+
+        //MyDbHandler db=new MyDbHandler(this);
+       // arrs=db.GetAllClocks();
+
+
         Intent intent = getIntent();
+        //Toast.makeText(this,"Service starting",Toast.LENGTH_SHORT).show();
         List<string> checkedlist = new ArrayList<>((List<string>) intent.getSerializableExtra("results2"));
+
+
         for (int i = 0; i < arrs.size(); i++) {
             for (int j = 0; j < checkedlist.size(); j++) {
                 if (arrs.get(i).city.equals(checkedlist.get(j).city)) {
@@ -68,6 +89,30 @@ public class WorldClock extends AppCompatActivity {
             }
 
         }
+        /*class ExampleThread extends Thread
+        {
+            int seconds;
+            ExampleThread(int seconds)
+            {
+                this.seconds=seconds;
+            }
+
+        @Override
+        public void run()
+        {
+            try {
+                for(int i=0;i<seconds;i++)
+                    Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+
+        }
+
+        }
+
+*/
         recyclerAdapter = new myadapter(arrs, this);
         rcv.setAdapter(recyclerAdapter);
 
