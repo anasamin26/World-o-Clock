@@ -50,31 +50,15 @@ public class WorldClock extends AppCompatActivity {
         setTitle("World Clock");
         rcv=(RecyclerView)findViewById(R.id.rclview);
         rcv.setLayoutManager(new LinearLayoutManager((this)));
-
-
-
-
         MyDbHandler db=new MyDbHandler(this);
         arrs=db.GetAllClocks();
-/*
-        String[] arr = TimeZone.getAvailableIDs();
-        string abc = new string();
-        for (int i = 0; i < arr.length; i++) {
-            abc = new string();
-            TimeZone.setDefault(TimeZone.getTimeZone(arr[i]));
-            SimpleDateFormat date_format = new SimpleDateFormat("hh:mm:ss a");
-            Date date = new Date();
-            abc.city = arr[i];
-            abc.time = date_format.format(date);
-            arrs.add(i, abc);
-
-
-        }*/
-
-        //MyDbHandler db=new MyDbHandler(this);
-       // arrs=db.GetAllClocks();
-
-
+       string abc = new string();
+       for(int i=0;i<arrs.size();i++) {
+           TimeZone.setDefault(TimeZone.getTimeZone(arrs.get(i).city));
+           SimpleDateFormat date_format = new SimpleDateFormat("hh:mm:ss a");
+           Date date = new Date();
+           arrs.get(i).time = date_format.format(date);
+       }
         Intent intent = getIntent();
         //Toast.makeText(this,"Service starting",Toast.LENGTH_SHORT).show();
         List<string> checkedlist = new ArrayList<>((List<string>) intent.getSerializableExtra("results2"));
@@ -89,30 +73,7 @@ public class WorldClock extends AppCompatActivity {
             }
 
         }
-        /*class ExampleThread extends Thread
-        {
-            int seconds;
-            ExampleThread(int seconds)
-            {
-                this.seconds=seconds;
-            }
 
-        @Override
-        public void run()
-        {
-            try {
-                for(int i=0;i<seconds;i++)
-                    Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-
-        }
-
-        }
-
-*/
         recyclerAdapter = new myadapter(arrs, this);
         rcv.setAdapter(recyclerAdapter);
 

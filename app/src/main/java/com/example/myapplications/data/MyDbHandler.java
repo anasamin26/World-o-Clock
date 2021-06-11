@@ -25,10 +25,8 @@ public class MyDbHandler extends SQLiteOpenHelper {
     public static final  String a="favs";
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String create="CREATE TABLE "+Params.TABLE_NAME+"("+Params.KEY_ID+"INTEGER PRIMARY KEY,"+Params.KEY_NAME+" TEXT,"+Params.KEY_TIME+" TEXT"+")";
-        String creat="CREATE TABLE "+Params.TABLE_NAME1+"("+Params.KEY_ID+"INTEGER PRIMARY KEY,"+Params.KEY_NAME+" TEXT,"+Params.KEY_TIME+" TEXT"+")";
-
-
+        String create="CREATE TABLE "+Params.TABLE_NAME+"("+Params.KEY_ID+"INTEGER PRIMARY KEY,"+Params.KEY_NAME+" TEXT)";
+        String creat="CREATE TABLE "+Params.TABLE_NAME1+"("+Params.KEY_ID+"INTEGER PRIMARY KEY,"+Params.KEY_NAME+" TEXT)";
         db.execSQL(create);
         db.execSQL(creat);
     }
@@ -43,7 +41,7 @@ public class MyDbHandler extends SQLiteOpenHelper {
         SQLiteDatabase db=this.getWritableDatabase();
         ContentValues values=new ContentValues();
         values.put(Params.KEY_NAME,s.city);
-        values.put(Params.KEY_TIME,s.time);
+
         try{
             db.insert(Params.TABLE_NAME,null,values);
             Log.d("abc","Successfully inserted");
@@ -61,7 +59,7 @@ public class MyDbHandler extends SQLiteOpenHelper {
         SQLiteDatabase db=this.getWritableDatabase();
         ContentValues values=new ContentValues();
         values.put(Params.KEY_NAME,s.city);
-        values.put(Params.KEY_TIME,s.time);
+
         try{
             db.insert(Params.TABLE_NAME1,null,values);
             Log.d("abcD","Successfully inserted");
@@ -84,7 +82,7 @@ public class MyDbHandler extends SQLiteOpenHelper {
       {
             string s=new string() ;
             s.city = cursor.getString(1);
-            s.time = cursor.getString(2);
+
             clocklist.add(s);
             Log.d("defg","Successfully retrieved");
 
@@ -104,7 +102,6 @@ public class MyDbHandler extends SQLiteOpenHelper {
         {
             string s=new string() ;
             s.city = cursor.getString(1);
-            s.time = cursor.getString(2);
             clocklist.add(s);
             Log.d("defg","Successfully retrieved");
 

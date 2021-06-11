@@ -36,15 +36,12 @@ public class Favourites extends AppCompatActivity {
         rcv = (RecyclerView) findViewById(R.id.rclvie);
         rcv.setLayoutManager(new LinearLayoutManager((this)));
         button = (FloatingActionButton) findViewById(R.id.b0);
-        if (android.os.Build.VERSION.SDK_INT > 9)
-        {
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-            StrictMode.setThreadPolicy(policy);
-        }
         Intent inten = new Intent(this,S.class);
         startService(inten);
 
+
         MyDbHandler db=new MyDbHandler(this);
+        List<string> sw=db.getAllClocks();
 
 
         final Handler handler = new Handler();
@@ -53,7 +50,6 @@ public class Favourites extends AppCompatActivity {
         handler.postDelayed(new Runnable(){
             public void run(){
                 result=db.getAllClocks();
-                List<string> shh=new ArrayList<>();
                 for(int i=0;i<result.size();i++)
                 {
                     string abc = new string();
@@ -61,18 +57,16 @@ public class Favourites extends AppCompatActivity {
                     SimpleDateFormat date_format = new SimpleDateFormat("hh:mm:ss a");
                     Date date = new Date();
                     abc.city = result.get(i).city;
-                    abc.time = date_format.format(date);
-                    shh.add(abc);
+                    result.get(i).time = date_format.format(date);
 
-                    //db.Saveallclock(abc);
+
+
 
                 }
                 for (int i = 0; i < result.size(); i++) {
-                    shh.get(i).check = true;
+                    result.get(i).check = true;
                 }
-
-                //MainRecyclerView.timer(); // call our adapter method here
-                rcv.setAdapter(new myadapter(shh,Favourites.this.getApplicationContext()));
+                rcv.setAdapter(new myadapter(result,Favourites.this.getApplicationContext()));
                 handler.postDelayed(this, delay);
             }
         }, delay);
